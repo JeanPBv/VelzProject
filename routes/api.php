@@ -22,5 +22,6 @@ Route::group(['prefix' => 'user'], function () {
 Route::group(['prefix' => 'appointment'], function () {
     Route::post('add', [AppointmentController::class, 'add_appoint']);
     Route::get('list', [AppointmentController::class, 'list_appoint']);
+    Route::get('list/{id}', [AppointmentController::class, 'list_appoint_user']);
 });
 
