@@ -40,4 +40,17 @@ class AppointmentController extends Controller
             'appointments' => $appointments
         ], 200);
     }
+
+    public function list_appoint_user($userId)
+    {
+        $appointments = Appointment::with('treatment')
+            ->where('user_id', $userId)
+            ->orderByRaw("STR_TO_DATE(date_appointment, '%d/%m/%Y') DESC")
+            ->get();
+
+        return response()->json([
+            'appointments' => $appointments
+        ], 200);
+    }
+
 }
