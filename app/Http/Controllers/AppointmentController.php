@@ -34,12 +34,15 @@ class AppointmentController extends Controller
 
     public function list_appoint()
     {
-        $appointments = Appointment::with(['user', 'treatment'])->get();
+        $appointments = Appointment::with('treatment')
+            ->where('status', 'pendiente')
+            ->get();
 
         return response()->json([
             'appointments' => $appointments
         ], 200);
     }
+
 
     public function list_appoint_user($userId)
     {
@@ -52,5 +55,42 @@ class AppointmentController extends Controller
             'appointments' => $appointments
         ], 200);
     }
+
+    public function edit_appoint(Request $request, $id)
+    {
+        $appointment = Appointment::find($id);
+        if (!$appointment) {
+            return response()->json(['message' => 'Cita no encontrada'], 404);
+        }
+
+        $request->validate([
+            'date_appointment' => 'required|string',
+            'time_appointment' => 'required|string',
+            'reminder' => 'required|integer',
+            'user_id' => 'required|exists:users,id',
+            'treatment_id' => 'required|exists:treatments,id',
+        ]);
+
+        $conflictingAppointments = Appointment::where('id', '!=', $id)
+            ->where('date_appointment', $request->date_appointment)
+            ->where('time_appointment', $request->time_appointment)
+            ->exists();
+
+        if ($conflictingAppointments) {
+            return response()->json(['message' => 'Ya existe una cita para esta fecha y hora'], 409);
+        }
+
+        $appointment->update([
+            'date_appointment' => $request->date_appointment,
+            'time_appointment' => $request->time_appointment,
+            'user_id' => $request->user_id,
+            'treatment_id' => $request->treatment_id,
+            'status' => 'Pendiente',
+            'reminder' => $request->reminder,
+        ]);
+
+        return response()->json(['message' => 'Cita actualizada exitosamente'], 200);
+    }
+
 
 }
