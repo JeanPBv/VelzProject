@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TreatmentController; 
 use App\Http\Controllers\UserController; 
 use App\Http\Controllers\AppointmentController; 
+use App\Http\Controllers\PaymentController; 
 
 
 Route::group(['prefix' => 'treatment'], function () {
@@ -24,5 +25,11 @@ Route::group(['prefix' => 'appointment'], function () {
     Route::get('list', [AppointmentController::class, 'list_appoint']);
     Route::get('list/{id}', [AppointmentController::class, 'list_appoint_user']);
     Route::put('/edit/{id}', [AppointmentController::class, 'edit_appoint']);
+});
+
+Route::group(['prefix' => 'payment'], function () {
+    Route::get('list', [PaymentController::class, 'getAllPayments']);
+    Route::get('list/{userId}', [PaymentController::class, 'getPaymentsByUserId']);
+    Route::post('add', [PaymentController::class, 'addPayment']);
 });
 

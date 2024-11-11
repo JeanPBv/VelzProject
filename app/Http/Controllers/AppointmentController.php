@@ -27,7 +27,8 @@ class AppointmentController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Cita agregada exitosamente'
+            'message' => 'Cita agregada exitosamente',
+            'appointment_id' => $appointment->id
         ], 201);
     }
 
