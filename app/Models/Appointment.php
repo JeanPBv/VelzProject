@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;     
 use App\Models\Treatment;  
+use App\Models\Payment;  
 
 class Appointment extends Model
 {
@@ -28,5 +29,10 @@ class Appointment extends Model
     public function treatment()
     {
         return $this->belongsTo(Treatment::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
     }
 }
