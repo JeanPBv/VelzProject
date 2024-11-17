@@ -18,6 +18,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('email/{email}', [UserController::class, 'view_user_email']);
     Route::get('/{id}', [UserController::class, 'view_user_id']);
     Route::post('login', [UserController::class, 'login_user']);
+    Route::put('edit/{id}', [UserController::class, 'update_user']);
 });
 
 Route::group(['prefix' => 'appointment'], function () {

@@ -95,4 +95,42 @@ class UserController extends Controller {
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
+    public function update_user(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|string|max:255',
+            'lastname' => 'sometimes|string|max:255',
+            'phone' => 'sometimes|string|max:15',
+            'dni' => 'sometimes|string|max:15',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado.'], 404);
+        }
+
+        if ($request->has('name')) {
+            $user->name = $request->input('name');
+        }
+        if ($request->has('lastname')) {
+            $user->lastname = $request->input('lastname');
+        }
+        if ($request->has('phone')) {
+            $user->phone = $request->input('phone');
+        }
+        if ($request->has('dni')) {
+            $user->dni = $request->input('dni');
+        }
+
+        if ($user->save()) {
+            return response()->json(['message' => 'Usuario actualizado con éxito.', 'user' => $user], 200);
+        } else {
+            return response()->json(['message' => 'Error al actualizar el usuario.'], 500);
+        }
+    }
 }
