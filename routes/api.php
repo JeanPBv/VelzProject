@@ -6,6 +6,7 @@ use App\Http\Controllers\TreatmentController;
 use App\Http\Controllers\UserController; 
 use App\Http\Controllers\AppointmentController; 
 use App\Http\Controllers\PaymentController; 
+use App\Http\Controllers\DentistController; 
 
 
 Route::group(['prefix' => 'treatment'], function () {
@@ -18,6 +19,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('email/{email}', [UserController::class, 'view_user_email']);
     Route::get('/{id}', [UserController::class, 'view_user_id']);
     Route::post('login', [UserController::class, 'login_user']);
+    Route::put('edit/{id}', [UserController::class, 'update_user']);
 });
 
 Route::group(['prefix' => 'appointment'], function () {
@@ -31,5 +33,10 @@ Route::group(['prefix' => 'payment'], function () {
     Route::get('list', [PaymentController::class, 'getAllPayments']);
     Route::get('list/{userId}', [PaymentController::class, 'getPaymentsByUserId']);
     Route::post('add', [PaymentController::class, 'addPayment']);
+});
+
+Route::group(['prefix' => 'dentist'], function () {
+    Route::get('/', [DentistController::class, 'get_all_dentist']);
+    Route::get('/{id}', [DentistController::class, 'get_dentist']);
 });
 
