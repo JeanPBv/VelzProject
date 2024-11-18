@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NiubizPaymentController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ContactController;
 
 /*Niubiz*/
 Route::post('niubiz-success/{appointment_id}/{_token}', [NiubizPaymentController::class, 'success'])->name('niubiz-success');
@@ -11,3 +12,9 @@ Route::get('niubiz/{appointment_id}', [NiubizPaymentController::class, 'viewNiub
 Route::get('payment-success', [PaymentController::class, 'success'])->name('payment-success');
 Route::get('payment-fail', [PaymentController::class, 'fail'])->name('payment-fail');
 Route::get('payment-alreadyPaid', [PaymentController::class, 'alreadyPaid'])->name('payment-alreadyPaid');
+
+Route::get('/petwellness', function () {
+    return view('welcome');
+})->name('petwellness');
+
+Route::post('contacts/store', [ContactController::class, 'store'])->name('contacts-store');
