@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
             'niubiz-success/*',
+            'contacts/store',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
