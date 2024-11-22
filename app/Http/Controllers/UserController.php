@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator; 
+use App\Mail\UserRegistered;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller {
    
@@ -35,6 +37,7 @@ class UserController extends Controller {
         $user->password = Hash::make($request->input('password')); 
 
         if ($user->save()) {
+            Mail::to($user->email)->send(new UserRegistered($user));
             return response()->json(['message' => 'Usuario registrado con éxito.'], 201);
         } else {
             return response()->json(['message' => 'Error al registrar el usuario.'], 500);
