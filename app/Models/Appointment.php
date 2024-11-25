@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;     
 use App\Models\Treatment;  
-use App\Models\Payment;  
+use App\Models\Payment;
+use App\Models\Dentist;   
 
 class Appointment extends Model
 {
@@ -18,7 +19,9 @@ class Appointment extends Model
         'status',
         'reminder',
         'user_id',
-        'treatment_id'
+        'treatment_id',
+        'dentist_id',
+        'reminder_datetime'
     ];
 
     public function user()
@@ -35,4 +38,10 @@ class Appointment extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function dentist()
+    {
+        return $this->belongsTo(Dentist::class);
+    }
+
 }
