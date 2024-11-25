@@ -46,12 +46,12 @@ class PaymentController extends Controller
 
     public function getPaymentsByUserId($userId)
     {
-        $appointments = Appointment::with('treatment')
+        $appointments = Appointment::with(['treatment', 'dentist'])
             ->where('user_id', $userId)
             ->get();
 
         $payments = Payment::whereIn('appointment_id', $appointments->pluck('id'))
-            ->with(['appointment.treatment'])
+            ->with(['appointment.treatment', 'appointment.dentist'])
             ->get();
 
         return response()->json([

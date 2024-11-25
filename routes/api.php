@@ -23,10 +23,11 @@ Route::group(['prefix' => 'user'], function () {
 });
 
 Route::group(['prefix' => 'appointment'], function () {
-    Route::post('add', [AppointmentController::class, 'add_appoint']);
+    Route::post('add', [AppointmentController::class, 'add_appoint']); 
     Route::get('list', [AppointmentController::class, 'list_appoint']);
     Route::get('list/{id}', [AppointmentController::class, 'list_appoint_user']);
     Route::put('/edit/{id}', [AppointmentController::class, 'edit_appoint']);
+    Route::get('notification', [AppointmentController::class, 'getAppointmentsWithin30Minutes']);
 });
 
 Route::group(['prefix' => 'payment'], function () {
