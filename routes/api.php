@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AppointmentController; 
 use App\Http\Controllers\PaymentController; 
 use App\Http\Controllers\DentistController; 
+use App\Http\Controllers\ReviewController; 
 
 
 Route::group(['prefix' => 'treatment'], function () {
@@ -39,5 +40,12 @@ Route::group(['prefix' => 'payment'], function () {
 Route::group(['prefix' => 'dentist'], function () {
     Route::get('/', [DentistController::class, 'get_all_dentist']);
     Route::get('/{id}', [DentistController::class, 'get_dentist']);
+    Route::get('stats/{id}', [DentistController::class, 'doctorStats']);
+});
+
+Route::group(['prefix' => 'review'], function () {
+    Route::get('/{id}', [ReviewController::class, 'getReviewsByAppointmentId']);
+    Route::post('add', [ReviewController::class, 'store']);
+
 });
 
