@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;     
 use App\Models\Treatment;  
 use App\Models\Payment;
-use App\Models\Dentist;   
+use App\Models\Dentist;
+use App\Models\Review;     
 
 class Appointment extends Model
 {
@@ -21,7 +22,8 @@ class Appointment extends Model
         'user_id',
         'treatment_id',
         'dentist_id',
-        'reminder_datetime'
+        'reminder_datetime',
+        'hasreview'
     ];
 
     public function user()
@@ -44,4 +46,8 @@ class Appointment extends Model
         return $this->belongsTo(Dentist::class);
     }
 
+    public function review()
+{
+    return $this->hasOne(Review::class);
+}
 }
